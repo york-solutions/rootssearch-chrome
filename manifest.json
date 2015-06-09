@@ -16,11 +16,11 @@
     "page": "background/background.html" 
   },
   "browser_action": {
-    "deafult_icon": {
+    "default_title": "RootsSearch",
+    "default_icon": {
       "19": "images/icon-19.png",
       "38": "images/icon-38.png"
-    },
-    "default_title": "RootsSearch"
+    }
   },
   "content_scripts": [
     {
