@@ -1,7 +1,7 @@
 // Set the debug flag if the extension isn't installed via the webstore
 var debug = chrome.app.getDetails().update_url ? false : true;
 
-var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'http://rootssearch.io/search';
+var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'https://rootssearch.io';
 
 // Store for person data we extract from the pages
 // TODO: empty; currently a memory leak
@@ -53,7 +53,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
     }
     
     // Show the RootsSearch icon
-    // TODO: update when url changes
+    // TODO: update when url changes (I believe this happens automatically)
     chrome.browserAction.setBadgeText({
       text: '1',
       tabId: sender.tab.id

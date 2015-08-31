@@ -30,9 +30,44 @@ function rsPost(data){
     $form.append(createHiddenInput('data[' + name + ']', value));
   });
   
+  // Add the url
   $form.append(createHiddenInput('url', data.url));
   
-  $form.submit();
+  // Check to see if we should send old site settings.
+  // We send them the first time the new extension POSTs
+  // to the new search page.
+  chrome.storage.local.get({'_site-settings-posted':false}, function(items){
+    if(!items['_site-settings-posted']){
+      
+      // Get a list of all stored values. Extract enabled sites.
+      chrome.storage.local.get(null, function(items){
+        var sites = [];
+        for(var key in items){
+          if(key.indexOf('site-') === 0 && items[key].enabled){
+            sites.push(key.split('-')[1]);
+          }
+        }
+        
+        // Save setting so that we know we've POSTed the sites
+        // and therefore don't need to do it again
+        if(sites.length){
+          $form.append(createHiddenInput('_sites', sites.join(',')));          
+          chrome.storage.local.set({'_site-settings-posted': true}, function(){
+            $form.submit();
+          });
+        }
+        
+        // No site settings so just POST
+        else {
+          $form.submit();
+        }
+      });  
+    } 
+    
+    else {
+      $form.submit();
+    }
+  });
 }
 
 /**
@@ -49,4 +84,18 @@ function createHiddenInput(name, value){
 function getParameterByName(name) {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function resetSettings(cb){
+  clearSetting(function(){
+    debugSettings(cb);
+  });
+}
+
+function debugSettings(cb){
+  chrome.storage.local.set({"site-americanancestors":{"enabled":true},"site-ancestry":{"enabled":true},"site-archives":{"enabled":true},"site-billiongraves":{"enabled":false},"site-chroniclingamerica":{"enabled":false},"site-familysearch":{"enabled":true},"site-findagrave":{"enabled":true},"site-findmypast":{"enabled":true},"site-findmypast.co.uk":{"enabled":true},"site-findmypast.com":{"enabled":false},"site-fold3":{"enabled":false},"site-genealogieonline":{"enabled":false},"site-genealogybank":{"enabled":false},"site-geneanet.en":{"enabled":false},"site-gengophers":{"enabled":false},"site-geni":{"enabled":false},"site-google":{"enabled":true},"site-mocavo":{"enabled":false},"site-myheritage":{"enabled":false},"site-newspapers":{"enabled":false},"site-nlatrove":{"enabled":false},"site-openarchives":{"enabled":false},"site-usgenweb":{"enabled":false},"site-werelate":{"enabled":false},"site-wikitree":{"enabled":false},"site-worldvitalrecords":{"enabled":false}}, cb);
+}
+
+function clearSettings(cb){
+  chrome.storage.local.clear(cb);
 }
