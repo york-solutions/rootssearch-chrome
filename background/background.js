@@ -7,6 +7,8 @@ var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'https://roots
 // TODO: empty; currently a memory leak
 var personDataObjects = {};
 
+ga('send', 'event', 'start', 'version', chrome.app.getDetails().version);
+
 // Listen for clicks on the browser action icon
 chrome.browserAction.onClicked.addListener(function(tab){
   var data = getData(tab.id);
@@ -20,6 +22,7 @@ chrome.browserAction.onClicked.addListener(function(tab){
     chrome.tabs.create({
       url: chrome.extension.getURL('/redirect/redirect.html?id=' + tab.id)
     });
+    ga('send', 'event', 'click', 'data');
   }
   
   // If there's no data on the tab then
@@ -28,24 +31,27 @@ chrome.browserAction.onClicked.addListener(function(tab){
     chrome.tabs.create({
       url: rsDomain + '/search'
     });
+    ga('send', 'event', 'click', 'noData');
   }
 });
 
 // Listen for events from content scripts
 chrome.extension.onRequest.addListener(function(request, sender) {
 
+  ga('send', 'pageview', sender.tab.url);
+
   // A scraper found person data and the content
   // script sent it to us
-  if( request.type == "person_info" ) {
+  if(request.type === 'data') {
     
     // Verify format of dates; they cause errors if they're not valid
-    if( typeof request.data.birthDate !== 'undefined' && !isValidDate(request.data.birthDate) ) {
+    if(typeof request.data.birthDate !== 'undefined' && !isValidDate(request.data.birthDate)) {
       if( debug ) {
         console.error('Bad birth date: ' + request.data.birthDate);
       }
       delete request.data.birthDate;
     }
-    if( typeof request.data.deathDate !== 'undefined' && !isValidDate(request.data.deathDate) ) {
+    if(typeof request.data.deathDate !== 'undefined' && !isValidDate(request.data.deathDate)) {
       if( debug ) {
         console.error('Bad death date: ' + request.data.deathDate);
       }
@@ -64,6 +70,16 @@ chrome.extension.onRequest.addListener(function(request, sender) {
       'data': request.data,
       'url': sender.tab.url
     };
+    
+    ga('send', 'event', 'pageLoad', 'data');
+  }
+  
+  else if(request.type === 'noData') {
+    ga('send', 'event', 'pageLoad', 'noData');
+  }
+  
+  else if(request.type === 'js_error'){
+    ga('send', 'event', 'error', 'jsError', sender.tab.url);
   }
   
 });

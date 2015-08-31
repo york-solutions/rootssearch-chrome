@@ -52,19 +52,22 @@ function rsPost(data){
         // and therefore don't need to do it again
         if(sites.length){
           $form.append(createHiddenInput('_sites', sites.join(',')));          
-          chrome.storage.local.set({'_site-settings-posted': true}, function(){
-            $form.submit();
-          });
+          ga('send', 'event', 'settings', 'saved');
+          $form.submit();
         }
         
         // No site settings so just POST
         else {
+          ga('send', 'event', 'settings', 'none');
           $form.submit();
         }
+        
+        chrome.storage.local.set({'_site-settings-posted': true});
       });  
     } 
     
     else {
+      ga('send', 'event', 'settings', 'alreadySaved');
       $form.submit();
     }
   });
