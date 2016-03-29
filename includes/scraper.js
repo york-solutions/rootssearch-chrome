@@ -10,7 +10,7 @@ genscrape()
       type: 'noData'
     });
   })
-  .on('error', function(e){
+  .on('error', function(exception){
     chrome.extension.sendRequest({
       type: 'js_error',
       data: {
