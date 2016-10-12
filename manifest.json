@@ -2,19 +2,19 @@
   "manifest_version": 2,
   "description": "Search across multiple genealogy sites for matching records.",
   "name": "RootsSearch",
-  "version": "4.1.1",
-  "permissions": [ 
+  "version": "4.1.2",
+  "permissions": [
     "tabs",
     "storage"
   ],
   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
-  "icons": { 
+  "icons": {
     "16": "images/logo-16.png",
     "48": "images/logo-48.png",
-    "128": "images/logo-128.png" 
+    "128": "images/logo-128.png"
   },
-  "background": { 
-    "page": "background/background.html" 
+  "background": {
+    "page": "background/background.html"
   },
   "browser_action": {
     "default_title": "RootsSearch",
@@ -25,13 +25,13 @@
   },
   "content_scripts": [
     {
-      "matches": [ 
+      "matches": [
         "<all_urls>"
       ],
       "run_at": "document_end",
-      "js": [ 
-        "includes/jquery-2.1.4.min.js", 
-        "includes/genscrape-0.1.6.js",
+      "js": [
+        "includes/jquery-2.1.4.min.js",
+        "includes/genscrape-0.1.7.js",
         "includes/scraper.js"
       ]
     }

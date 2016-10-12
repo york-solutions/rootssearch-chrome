@@ -12,7 +12,7 @@ ga('send', 'event', 'start', 'version', chrome.app.getDetails().version);
 // Listen for clicks on the browser action icon
 chrome.browserAction.onClicked.addListener(function(tab){
   var data = getData(tab.id);
-  
+
   // If there's person data on the tab then
   // open post helper that will forward to rs.io
   // since we can't POST directly to a tab from here.
@@ -24,7 +24,7 @@ chrome.browserAction.onClicked.addListener(function(tab){
     });
     ga('send', 'event', 'click', 'data');
   }
-  
+
   // If there's no data on the tab then
   // send user to rs.io with empty form
   else {
@@ -43,7 +43,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
   // A scraper found person data and the content
   // script sent it to us
   if(request.type === 'data') {
-    
+
     // Verify format of dates; they cause errors if they're not valid
     if(typeof request.data.birthDate !== 'undefined' && !isValidDate(request.data.birthDate)) {
       if( debug ) {
@@ -57,31 +57,35 @@ chrome.extension.onRequest.addListener(function(request, sender) {
       }
       delete request.data.deathDate;
     }
-    
+
     // Show the RootsSearch icon
     // TODO: update when url changes (I believe this happens automatically)
     chrome.browserAction.setBadgeText({
       text: '1',
       tabId: sender.tab.id
     });
-    
+
     // Store the data
     personDataObjects[sender.tab.id] = {
       'data': request.data,
       'url': sender.tab.url
     };
-    
+
     ga('send', 'event', 'pageLoad', 'data');
   }
-  
+
   else if(request.type === 'noData') {
     ga('send', 'event', 'pageLoad', 'noData');
+    chrome.browserAction.setBadgeText({
+      text: '',
+      tabId: sender.tab.id
+    });
   }
-  
+
   else if(request.type === 'js_error'){
     ga('send', 'event', 'error', 'jsError', sender.tab.url);
   }
-  
+
 });
 
 chrome.browserAction.setBadgeBackgroundColor({
@@ -92,7 +96,7 @@ chrome.browserAction.setBadgeBackgroundColor({
  * Get the person data object for a specific tab.
  */
 function getData(tabId){
-  return personDataObjects[tabId]; 
+  return personDataObjects[tabId];
 }
 
 function getRSDomain(){
