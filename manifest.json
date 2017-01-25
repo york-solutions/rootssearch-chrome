@@ -31,7 +31,7 @@
       "run_at": "document_end",
       "js": [
         "includes/jquery-2.1.4.min.js",
-        "includes/genscrape-0.1.8.js",
+        "includes/genscrape.min.js",
         "includes/scraper.js"
       ]
     }
