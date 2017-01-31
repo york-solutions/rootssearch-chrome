@@ -13,7 +13,7 @@ if(data){
 // Show error message if there is no data
 // TODO: automatically record/report error
 else {
-  
+
 }
 
 /**
@@ -21,24 +21,22 @@ else {
  */
 function rsPost(data){
   var $form = $('#form');
-  
+
   // Add proper domain to form action
   $form.attr('action', background.getRSDomain() + $form.attr('action'));
-  
+
   // Add person data
-  $.each(data.data, function(name, value){
-    $form.append(createHiddenInput('data[' + name + ']', value));
-  });
-  
+  $form.append(createHiddenInput('gedcomx', JSON.stringify(data.data)));
+
   // Add the url
   $form.append(createHiddenInput('url', data.url));
-  
+
   // Check to see if we should send old site settings.
   // We send them the first time the new extension POSTs
   // to the new search page.
   chrome.storage.local.get({'_site-settings-posted':false}, function(items){
     if(!items['_site-settings-posted']){
-      
+
       // Get a list of all stored values. Extract enabled sites.
       chrome.storage.local.get(null, function(items){
         var sites = [];
@@ -47,25 +45,25 @@ function rsPost(data){
             sites.push(key.split('-')[1]);
           }
         }
-        
+
         // Save setting so that we know we've POSTed the sites
         // and therefore don't need to do it again
         if(sites.length){
-          $form.append(createHiddenInput('_sites', sites.join(',')));          
+          $form.append(createHiddenInput('_sites', sites.join(',')));
           ga('send', 'event', 'settings', 'saved');
           $form.submit();
         }
-        
+
         // No site settings so just POST
         else {
           ga('send', 'event', 'settings', 'none');
           $form.submit();
         }
-        
+
         chrome.storage.local.set({'_site-settings-posted': true});
-      });  
-    } 
-    
+      });
+    }
+
     else {
       ga('send', 'event', 'settings', 'alreadySaved');
       $form.submit();
