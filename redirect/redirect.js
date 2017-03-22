@@ -20,16 +20,16 @@ else {
  * Send user to rs.io by filling a form and POSTing
  */
 function rsPost(data){
-  var $form = $('#form');
+  var $form = document.getElementById('form');
 
   // Add proper domain to form action
-  $form.attr('action', background.getRSDomain() + $form.attr('action'));
+  $form.action = background.getRSDomain() + '/search';
 
   // Add person data
-  $form.append(createHiddenInput('gedcomx', JSON.stringify(data.data)));
+  $form.appendChild(createHiddenInput('gedcomx', JSON.stringify(data.data)));
 
   // Add the url
-  $form.append(createHiddenInput('url', data.url));
+  $form.appendChild(createHiddenInput('url', data.url));
 
   // Check to see if we should send old site settings.
   // We send them the first time the new extension POSTs
@@ -49,7 +49,7 @@ function rsPost(data){
         // Save setting so that we know we've POSTed the sites
         // and therefore don't need to do it again
         if(sites.length){
-          $form.append(createHiddenInput('_sites', sites.join(',')));
+          $form.appendChild(createHiddenInput('_sites', sites.join(',')));
           ga('send', 'event', 'settings', 'saved');
           $form.submit();
         }
@@ -75,10 +75,11 @@ function rsPost(data){
  * Create a hidden form element
  */
 function createHiddenInput(name, value){
-  return $('<input>')
-    .attr('type', 'hidden')
-    .attr('name', name)
-    .val(value);
+  var input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = name;
+  input.value = value;
+  return input;
 }
 
 // http://stackoverflow.com/a/5158301/879121
