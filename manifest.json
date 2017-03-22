@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "description": "Search across multiple genealogy sites for matching records.",
   "name": "RootsSearch",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "permissions": [
     "tabs",
     "storage"
