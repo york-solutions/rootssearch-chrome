@@ -50,22 +50,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
   // script sent it to us
   if(request.type === 'data') {
 
-    // Verify format of dates; they cause errors if they're not valid
-    if(typeof request.data.birthDate !== 'undefined' && !isValidDate(request.data.birthDate)) {
-      if( debug ) {
-        console.error('Bad birth date: ' + request.data.birthDate);
-      }
-      delete request.data.birthDate;
-    }
-    if(typeof request.data.deathDate !== 'undefined' && !isValidDate(request.data.deathDate)) {
-      if( debug ) {
-        console.error('Bad death date: ' + request.data.deathDate);
-      }
-      delete request.data.deathDate;
-    }
-
     // Show the RootsSearch icon
-    // TODO: update when url changes (I believe this happens automatically)
     chrome.browserAction.setBadgeText({
       text: '1',
       tabId: sender.tab.id
@@ -80,6 +65,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
     ga('send', 'event', 'pageLoad', 'data');
   }
 
+  // No data found so we reset the badge.
   else if(request.type === 'noData') {
     ga('send', 'event', 'pageLoad', 'noData');
     chrome.browserAction.setBadgeText({
@@ -89,6 +75,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
     delete personDataObjects[sender.tab.id];
   }
 
+  // Report the page where the error occured.
   else if(request.type === 'js_error'){
     ga('send', 'event', 'error', 'jsError', sender.tab.url);
     delete personDataObjects[sender.tab.id];
