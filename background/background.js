@@ -77,6 +77,7 @@ chrome.extension.onRequest.addListener(function(request, sender) {
 
   // Report the page where the error occured.
   else if(request.type === 'js_error'){
+    console.error(request.data);
     ga('send', 'event', 'error', 'jsError', sender.tab.url);
     delete personDataObjects[sender.tab.id];
   }
