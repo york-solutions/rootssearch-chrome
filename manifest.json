@@ -4,8 +4,7 @@
   "name": "RootsSearch",
   "version": "5.0.3",
   "permissions": [
-    "tabs",
-    "storage"
+    "tabs"
   ],
   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "icons": {
