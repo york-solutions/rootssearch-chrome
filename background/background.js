@@ -26,7 +26,7 @@ chrome.browserAction.onClicked.addListener(function(tab){
   // that it can request the person data for posting.
   if(data){
     chrome.tabs.create({
-      url: chrome.extension.getURL('/redirect/redirect.html?id=' + tab.id)
+      url: chrome.extension.getURL('/pages/data.html?id=' + tab.id)
     });
     ga('send', 'event', 'click', 'data');
   }

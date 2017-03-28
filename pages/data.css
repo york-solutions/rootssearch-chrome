@@ -1,0 +1,44 @@
+body {
+  text-align: center;
+  color: #333;
+  font-size: 18px;
+}
+
+#logo {
+  vertical-align: middle;
+}
+
+h1 {
+  margin: .5em 0;
+  font-weight: normal;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100% - 63px);
+}
+
+button {
+  background-color: #49AFCD;
+  color: white;
+  padding: .4em .75em;
+  border: 0;
+  margin: 0 1em;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px #ccc;
+  transition: .5s;
+}
+button:hover {
+  box-shadow: 1px 1px 1px #777;
+}
+
+.person-info {
+  margin-bottom: 2em;
+}
+
+.person-info .person-name {
+  font-size: 2em;
+}
