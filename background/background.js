@@ -3,9 +3,15 @@ var debug = chrome.app.getDetails().update_url ? false : true;
 
 var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'https://rootssearch.io';
 
-// Store for person data we extract from the pages
-// TODO: empty; currently a memory leak
+// Store for person data we extract from the pages.
+// Data is stored by tabId. Data is overwritten when
+// the user navigates. Data is cleared (memory freed)
+// when a tab is closed.
 var personDataObjects = {};
+
+chrome.browserAction.setBadgeBackgroundColor({
+  color: '#49AFCD'
+});
 
 ga('send', 'event', 'start', 'version', chrome.app.getDetails().version);
 
@@ -80,16 +86,19 @@ chrome.extension.onRequest.addListener(function(request, sender) {
       text: '',
       tabId: sender.tab.id
     });
+    delete personDataObjects[sender.tab.id];
   }
 
   else if(request.type === 'js_error'){
     ga('send', 'event', 'error', 'jsError', sender.tab.url);
+    delete personDataObjects[sender.tab.id];
   }
 
 });
 
-chrome.browserAction.setBadgeBackgroundColor({
-  color: '#49AFCD'
+// Cleanup personData when a tab closes
+chrome.tabs.onRemoved.addListener(function(tabId){
+  delete personDataObjects[tabId];
 });
 
 /**
