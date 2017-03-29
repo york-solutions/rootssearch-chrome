@@ -46,7 +46,7 @@ GedcomX.Person.prototype.getLifespan = function(){
     }
   }
   if(deathLike){
-    let deathDate = deathLike.getYear();
+    let deathDate = deathLike.getDate();
     if(deathDate){
       deathYear = deathDate.getYear();
     }

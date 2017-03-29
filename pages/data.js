@@ -23,7 +23,8 @@ document.getElementById('search-btn').addEventListener('click', function(){
   rsPost(data);
 });
 document.getElementById('save-btn').addEventListener('click', function(){
-  // TODO: transition to list of save options
+  document.getElementById('view1').classList.add('slide-out');
+  document.getElementById('view2').classList.add('slide-in');
 });
 
 /**

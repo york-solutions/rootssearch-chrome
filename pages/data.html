@@ -6,19 +6,29 @@
     <script src="../includes/analytics.js"></script>
   </head>
   <body>
-    <h1>
-      <img id="logo" src="../images/logo-19.png" />
+    <div id="logo">
+      <img src="../images/logo-19.png" />
       RootsSearch
-    </h1>
+    </div>
     <div id="content">
-      <div class="person-info">
-        <div class="person-name"></div>
-        <div class="person-lifespan"></div>
+      <div id="view1" class="view">
+        <div class="person-info">
+          <h1 class="person-name"></h1>
+          <div class="person-lifespan"></div>
+        </div>
+        <div class="buttons">
+          <button id="save-btn">Save</button>
+          or
+          <button id="search-btn">Search</button>
+        </div>
       </div>
-      <div class="buttons">
-        <button id="save-btn">Save</button>
-        or
-        <button id="search-btn">Search</button>
+      <div id="view2" class="view">
+        <h1>Where do you want to save the data?</h1>
+        <div class="buttons">
+          <button>FamilySearch</button>
+          <button>WikiTree</button>
+          <button>GEDCOM X</button>
+        </div>
       </div>
     </div>
     <script src="../bower_components/gedcomx-js/index.js"></script>
