@@ -26,14 +26,26 @@ document.getElementById('save-btn').addEventListener('click', function(){
   document.getElementById('view1').classList.add('slide-out');
   document.getElementById('view2').classList.add('slide-in');
 });
+document.getElementById('save-fs-btn').addEventListener('click', function(){
+  fsPost(data);
+});
 
 /**
- * Send user to rs.io by filling a form and POSTing
+ * Send to rootssearch.io search form
  */
 function rsPost(data){
   postData(background.getRSDomain() + '/search', {
     gedcomx: data.data,
     url: data.url
+  });
+}
+
+/**
+ * Send to rootssearch.io FS save page
+ */
+function fsPost(data){
+  postData(background.getRSDomain() + '/save/fs', {
+    gedcomx: data.data
   });
 }
 
