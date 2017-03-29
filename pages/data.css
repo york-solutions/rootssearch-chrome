@@ -43,7 +43,7 @@ button:hover {
 
 #content {
   position: relative;
-  height: calc(100% - 63px);
+  height: calc(100% - 43px);
   overflow: hidden;
 }
 
@@ -57,6 +57,14 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.view-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
 }
 
 #view1.slide-out {
@@ -70,6 +78,12 @@ button:hover {
   transform: translateX(0%);
 }
 
-.buttons {
+.section:not(:first-child) {
   margin-top: 2em;
+}
+
+.relationships {
+  display: none;
+  font-size: .8em;
+  margin-top: 1em;
 }

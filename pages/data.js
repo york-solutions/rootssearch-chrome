@@ -18,6 +18,18 @@ var principalPerson = gedcomx.getPrincipalPerson();
 document.querySelector('.person-info .person-name').textContent = principalPerson.getDisplayName();
 document.querySelector('.person-info .person-lifespan').textContent = principalPerson.getLifespan();
 
+// Calculate relationships
+var otherNames = [];
+gedcomx.getPersons().forEach(p => {
+  if(p !== principalPerson){
+    otherNames.push(p.getDisplayName());
+  }
+});
+if(otherNames.length){
+  document.querySelector('.relationships').style.display = 'block';
+  document.querySelector('.relationship-list').textContent = otherNames.join(', ');
+}
+
 // Setup button listeners
 document.getElementById('search-btn').addEventListener('click', function(){
   rsPost(data);
