@@ -3,7 +3,8 @@ var tabId = getParameterByName('id');
 
 // Get data
 var background = chrome.extension.getBackgroundPage(),
-    data = background.getData(tabId);
+    data = background.getData(tabId),
+    gedcomx = new GedcomX(data.data);
 
 // Don't have much data here to report. Perhaps in the
 // future we could query the tab URL.
@@ -13,7 +14,9 @@ if(!data) {
 }
 
 // Calculate person's display summary
-
+var principalPerson = gedcomx.getPrincipalPerson();
+document.querySelector('.person-info .person-name').textContent = principalPerson.getDisplayName();
+document.querySelector('.person-info .person-lifespan').textContent = principalPerson.getLifespan();
 
 // Setup button listeners
 document.getElementById('search-btn').addEventListener('click', function(){

@@ -29,7 +29,7 @@
       ],
       "run_at": "document_end",
       "js": [
-        "includes/genscrape.min.js",
+        "bower_components/genscrape/index.js",
         "includes/scraper.js"
       ]
     }

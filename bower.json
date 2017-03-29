@@ -1,0 +1,14 @@
+{
+  "name": "rootssearch-chrome",
+  "homepage": "https://github.com/york-solutions/rootssearch-chrome",
+  "authors": [
+    "Justin <justincyork@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "private": true,
+  "dependencies": {
+    "genscrape": "https://unpkg.com/genscrape@1.2.2/dist/genscrape.min.js",
+    "gedcomx-js": "https://unpkg.com/gedcomx-js@2.8.0/dist/gedcomx.min.js"
+  }
+}
