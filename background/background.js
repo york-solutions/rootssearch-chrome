@@ -1,7 +1,7 @@
 // Set the debug flag if the extension isn't installed via the webstore
-var debug = chrome.app.getDetails().update_url ? false : true;
-
-var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'https://rootssearch.io';
+// var debug = chrome.app.getDetails().update_url ? false : true;
+// var rsDomain = debug ? 'https://rootssearch-www-justincy.c9.io' : 'https://rootssearch.io';
+var rsDomain = 'https://rootssearch.io';
 
 // Store for person data we extract from the pages.
 // Data is stored by tabId. Data is overwritten when
